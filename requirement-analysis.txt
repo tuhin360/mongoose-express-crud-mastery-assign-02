@@ -1,0 +1,26 @@
+Entities:
+User
+Order
+ 
+
+
+
+Collections:
+User{
+    name: "Sakib",
+    email: "sakib@gmail.com" 
+}
+
+
+"orders": [
+            {
+                "productName": "Product 1",
+                "price": 23.56,
+                "quantity": 2
+            },
+            {
+                "productName": "Product 2",
+                "price": 23.56,
+                "quantity": 5
+            }
+        ]
