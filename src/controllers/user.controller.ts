@@ -4,6 +4,7 @@ import User from '../models/user.model';
 const createUser = async (req: Request, res: Response) => {
   try {
     const userData = req.body;
+    console.log(userData);
     const result = await User.create(userData);
     res.status(201).json({
       status: 'success',
