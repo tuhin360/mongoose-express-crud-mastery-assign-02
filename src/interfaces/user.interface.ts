@@ -1,4 +1,5 @@
 interface IUser {
+  toObject(): unknown;
   userId: number;
   username: string;
   password: string;

@@ -26,7 +26,7 @@ const getAllUser = async (req: Request, res: Response) => {
     const result = await userServices.getAllUser();
     res.status(200).json({
       statusCode: 'success',
-      message: 'User fetched successfully',
+      message: 'User fetched successfully!',
       data: result,
     });
   } catch (error: any) {
@@ -44,15 +44,19 @@ const getSingleUser = async (req: Request, res: Response) => {
     const result = await userServices.getSingleUser(id);
 
     res.status(200).json({
-      status: 'success',
-      message: 'Single user fetched successfully',
+      success: true,
+      message: 'User fetched successfully',
       data: result,
     });
   } catch (error: any) {
     console.log(error);
     res.status(500).json({
-      status: 'fail',
-      message: error.message || 'Something went wrong',
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
@@ -71,8 +75,12 @@ const updateUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.log(error);
     res.status(500).json({
-      status: 'fail',
-      message: error.message || 'Something went wrong',
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
@@ -82,14 +90,19 @@ const deleteUser = async (req: Request, res: Response) => {
     const id = req.params.id;
     await userServices.deleteUser(id);
     res.status(200).json({
-      status: 'success',
-      message: 'User deleted successfully',
+      success: true,
+      message: 'User deleted successfully!',
+      data: null,
     });
   } catch (error: any) {
     console.log(error);
     res.status(500).json({
-      status: 'fail',
-      message: error.message || 'Something went wrong',
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
