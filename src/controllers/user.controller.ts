@@ -40,26 +40,62 @@ const getAllUser = async (req: Request, res: Response) => {
 
 const getSingleUser = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
-    const result = await userServices.getSingleUser(id);
+    const userIdString = req.params.userId;
+    const userId = parseInt(userIdString, 10);
 
-    res.status(200).json({
-      success: true,
-      message: 'User fetched successfully',
-      data: result,
-    });
+    const result = await userServices.getSingleUser(userId);
+
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'User fetched successfully',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({
       success: false,
-      message: 'User not found',
+      message: 'Internal Server Error',
       error: {
-        code: 404,
-        description: 'User not found!',
+        code: 500,
+        description: 'Something went wrong on the server!',
       },
     });
   }
 };
+
+// const getSingleUser = async (req: Request, res: Response) => {
+//   try {
+//     const userId  = req.params.userId;
+//     const result = await userServices.getSingleUser(userId);
+
+//     res.status(200).json({
+//       success: true,
+//       message: 'User fetched successfully',
+//       data: result,
+//     });
+//   } catch (error: any) {
+//     console.log(error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'User not found',
+//       error: {
+//         code: 404,
+//         description: 'User not found!',
+//       },
+//     });
+//   }
+// };
 
 const updateUser = async (req: Request, res: Response) => {
   try {

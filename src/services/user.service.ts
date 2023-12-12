@@ -7,14 +7,22 @@ const createUser = async (userData: IUser): Promise<IUser> => {
 };
 
 const getAllUser = async (): Promise<IUser[]> => {
-  const result = await User.find().select('-password');
+  const result = await User.find().select('username fullName age email address');
+  return result.map(user => ({
+    username: user.username,
+    fullName: user.fullName,
+    age: user.age,
+    email: user.email,
+    address: user.address,
+  }));
+};
+
+
+const getSingleUser = async (userId: number): Promise<IUser | null> => {
+  const result = await User.findOne({ userId: userId }).select('-password');
   return result;
 };
 
-const getSingleUser = async (id: string): Promise<IUser | null> => {
-  const result = await User.findById(id);
-  return result;
-};
 
 const updateUser = async (
   id: string,
