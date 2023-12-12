@@ -5,6 +5,7 @@ const userSchema = new Schema<IUser>({
   userId: {
     type: Number,
     required: [true, 'Please provide your userId'],
+    unique: true,
   },
   username: {
     type: String,
@@ -31,6 +32,8 @@ const userSchema = new Schema<IUser>({
   email: {
     type: String,
     required: [true, 'Please provide your email'],
+    unique: true,
+    lowercase: true,
   },
   isActive: {
     type: Boolean,
