@@ -16,6 +16,11 @@ interface IUser {
     city: string;
     country: string;
   };
+  orders?: Array<{
+    productName: string;
+    price: number;
+    quantity: number;
+  }>;
 }
  
 export { IUser };

@@ -57,6 +57,22 @@ const userSchema = new Schema<IUser>({
       required: [true, 'Please provide a your country'],
     },
   },
+  orders: [
+    {
+      productName: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
 });
 
 const User = model<IUser>('User', userSchema);

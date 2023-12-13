@@ -1,8 +1,7 @@
 interface IOrder {
-  // toObject(): unknown;
   productName: string;
   price: number;
-  productQuantity: number;
+  quantity: number;
 }
 
 export { IOrder };
