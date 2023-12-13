@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IUser } from '../interfaces/user.interface';
 import User from '../models/user.model';
 
@@ -8,14 +9,9 @@ const createUser = async (userData: IUser): Promise<IUser> => {
 
 const getAllUser = async (): Promise<IUser[]> => {
   const result = await User.find().select('username fullName age email address');
-  return result.map(user => ({
-    username: user.username,
-    fullName: user.fullName,
-    age: user.age,
-    email: user.email,
-    address: user.address,
-  }));
+  return result.map(user => user.toObject() as IUser);
 };
+
 
 
 const getSingleUser = async (userId: number): Promise<IUser | null> => {
@@ -25,19 +21,24 @@ const getSingleUser = async (userId: number): Promise<IUser | null> => {
 
 
 const updateUser = async (
-  id: string,
-  userData: IUser,
+  userId: number,
+  userData: any,
 ): Promise<IUser | null> => {
-  const result = await User.findByIdAndUpdate(id, userData, {
+  const result = await User.findOneAndUpdate( { userId: userId }, userData, {
     new: true,
     runValidators: true,
   });
 
-  return result;
+  if (result) {
+    return result.toObject() as IUser;
+  } else {
+    return null;
+  }
 };
 
-const deleteUser = async (id: string): Promise<IUser | null> => {
-  const result = await User.findByIdAndDelete(id);
+
+const deleteUser = async (userId: number): Promise<IUser | null> => {
+  const result = await User.findOneAndDelete({ userId: userId });
   return result;
 };
 
