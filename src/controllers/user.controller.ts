@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { userServices } from '../services/user.service';
-
 import Joi from 'joi';
-import { IUser } from '../interfaces/user.interface';
 
 const userSchema = Joi.object({
   userId: Joi.number().required(),
@@ -33,11 +31,10 @@ const createUser = async (req: Request, res: Response) => {
     if (error) {
       res.status(500).json({
         status: 'fail',
-        message:'Something went wrong',
-        error:error.details,
+        message: 'Something went wrong',
+        error: error.details,
       });
     }
- 
 
     const result = await userServices.createUser(userData);
 
@@ -79,7 +76,7 @@ const getSingleUser = async (req: Request, res: Response) => {
 
     const result = await userServices.getSingleUser(userId);
 
-    if (result instanceof IUser) {
+    if (result instanceof Object && 'userId' in result) {
       res.status(200).json({
         success: true,
         message: 'User fetched successfully',
@@ -107,42 +104,6 @@ const getSingleUser = async (req: Request, res: Response) => {
     });
   }
 };
-
-// const getSingleUser = async (req: Request, res: Response) => {
-//   try {
-//     const userIdString = req.params.userId;
-//     const userId = parseInt(userIdString, 10);
-
-//     const result = await userServices.getSingleUser(userId);
-
-//     if (result) {
-//       res.status(200).json({
-//         success: true,
-//         message: 'User fetched successfully',
-//         data: result,
-//       });
-//     } else {
-//       res.status(404).json({
-//         success: false,
-//         message: 'User not found',
-//         error: {
-//           code: 404,
-//           description: 'User not found!',
-//         },
-//       });
-//     }
-//   } catch (error: any) {
-//     console.error(error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Internal Server Error',
-//       error: {
-//         code: 500,
-//         description: 'Something went wrong',
-//       },
-//     });
-//   }
-// };
 
 const updateUser = async (req: Request, res: Response) => {
   try {
@@ -187,24 +148,6 @@ const updateUser = async (req: Request, res: Response) => {
     });
   }
 };
-
-// const updateUser = async (
-//   userId: number,
-//   userData: any,
-// ): Promise<IUser | null> => {
-//   const result = await User.findByIdAndUpdate(userId, userData, {
-//     new: true,
-//     runValidators: true,
-//   });
-
-//   if (result) {
-//     const userObject = result.toObject();
-//     const updatedUser = userObject as IUser;
-//     return updatedUser;
-//   } else {
-//     return null;
-//   }
-// };
 
 const deleteUser = async (req: Request, res: Response) => {
   try {

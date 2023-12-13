@@ -72,39 +72,6 @@ const getAllOrdersForUser = async (req: Request, res: Response) => {
   }
 };
 
- 
-//   try {
-//     const userId = parseInt(req.params.userId, 10);
-//     const result = await orderServices.getAllOrdersForUser(userId);
-
-//     if (result.success) {
-//       res.status(200).json({
-//         success: true,
-//         message: 'Orders fetched successfully!',
-//         data: result.data,
-//       });
-//     } else {
-//       res.status(result.error.code).json({
-//         success: false,
-//         message: result.message,
-//         error: null,
-//         data: null,
-//       });
-//     }
-//   } catch (error: any) {
-//     console.error(error);
-//     res.status(500).json({
-//       success: false,
-//       message: error.message || 'Internal Server Error',
-//       error: {
-//         code: 500,
-//         description: 'Something went wrong',
-//       },
-//       data: null,
-//     });
-//   }
-// };
-
 export const orderController = {
   addOrder,
   getAllOrdersForUser,
